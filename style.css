@@ -1,0 +1,58 @@
+body {
+    background-color: brown;
+}
+
+#library {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    height: 20rem;
+    width: 8rem;
+
+}
+
+.card-book-info{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.card-author {
+    font-size: 0.9rem;
+    color: grey;
+}
+
+.card-cover {
+    height: 80%;
+    width: 80%;
+    background-color: gray;
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-page-info {
+    display: flex;
+    gap: 2rem;
+}
+
+.card-page-img {
+    background-image: url("./images/book.svg");
+}
+
+.card-pages {
+    font-size: 1.2rem;
+}
+
+.card-delete {
+    background-image: url("./images/trash.svg");
+}
