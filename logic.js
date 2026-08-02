@@ -64,6 +64,7 @@ function renderBooksInLibrary() {
         bookTitle.classList.add("card-title");
         bookAuthor.classList.add("card-author");
         bookRead.classList.add("card-read-btn");
+        bookRead.textContent = "?";
 
         const cover = document.createElement("img");
         cover.classList.add("card-cover");
