@@ -16,16 +16,24 @@
         <form id="addBookForm" method="dialog">
             <p>Enter the details of your book</p>
 
+            <div id="cover-container">
+                <div class="cover upload-image" id="coverPreview"></div>
+                <div class="cover upload-cover-text">
+                    <label for="bookCover">Upload cover</label>
+                </div>
+                <input type="file" name="bookCover" id="bookCover" accept="image/*">
+            </div>
+
             <div id="input-fields">
 
                 <div class="basic-input">
                     <div class="input-field bookTitle">
                         <label for="bookTitle">Book title:</label>
-                        <input name="bookTitle" id="bookTitle" type="text">
+                        <input name="bookTitle" id="bookTitle" type="text" required minlength="1" maxlength="50">
                     </div>
                     <div class="input-field bookAuthor">
                         <label for="bookAuthor">Author:</label>
-                        <input name="bookAuthor" id="bookAuthor" type="text">
+                        <input name="bookAuthor" id="bookAuthor" type="text" required minlength="1" maxlength="50">
                     </div>
                     <div class="input-field bookPages">
                         <label for="bookPages">Pages:</label>

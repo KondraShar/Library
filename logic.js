@@ -1,13 +1,14 @@
 
 const library = [];
 
-function Book(title, author, pages, read, yearWritten) {
+function Book(title, author, pages, read, yearWritten, cover) {
     this.id = crypto.randomUUID();
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
     this.yearWritten = yearWritten;
+    this.cover = cover;
 }
 
 Book.prototype.info = function() {
@@ -18,14 +19,14 @@ Book.prototype.toggleRead = function () {
     this.read = !this.read;
 };
 
-function addBookToLibrary(title, author, pages, read, yearWritten) {
-    library.push(new Book(title, author, pages, read, yearWritten));
+function addBookToLibrary(title, author, pages, read, yearWritten, cover) {
+    library.push(new Book(title, author, pages, read, yearWritten, cover));
 }
  
 // Data seeder
 addBookToLibrary("aBook", "author", 393, true, 1290);
 addBookToLibrary("hello", "author", 39, true, 1290);
-addBookToLibrary("breakdance classics", "mozart", 38, true, 1469);
+addBookToLibrary("breakdance classics - laksdlfkjalökdsjflökalskdjflkjaldsk", "mozart", 38, true, 1469);
 addBookToLibrary("aBook", "author", 234, true, 1290);
 addBookToLibrary("aBook", "author", 300, true, 1290);
 
@@ -49,16 +50,20 @@ function renderBooksInLibrary() {
         bookTitle.classList.add("card-title");
         bookAuthor.classList.add("card-author");
 
+        bookTitle.title = book.title;
+        bookAuthor.title = book.author;
+
         if (book.read) {
             bookRead.textContent = "\u2713";
             bookRead.classList.add("card-have-read-btn", "card-read-btn");
         } else {
-            bookRead.textContent = "?";
+            bookRead.textContent = "\u00d7";
             bookRead.classList.add("card-have-not-read-btn",  "card-read-btn");
         }
 
         const cover = document.createElement("img");
         cover.classList.add("card-cover");
+        if (book.cover) cover.src = book.cover;
         
         const cardBottom = document.createElement("div");
         const pageInfo = document.createElement("div");
@@ -113,12 +118,16 @@ addNewBookBtn.addEventListener( "click", (e) => {
     const formData = new FormData(addBookForm);
     const data = Object.fromEntries(formData);
 
+    const file = coverInput.files[0];
+    const cover = file ? URL.createObjectURL(file) : null;
+
     addBookToLibrary(
         data.bookTitle,
         data.bookAuthor,
         data.bookPages,
         data.bookHaveRead === "on",
-        data.bookYearWritten
+        data.bookYearWritten,
+        cover,
     );
 
     addBookForm.reset();
@@ -173,3 +182,22 @@ libDiv.addEventListener( "click", (e) => {
     libDiv.replaceChildren();
     renderBooksInLibrary();
 })
+
+
+// Add cover image to book
+
+const coverInput = document.querySelector("#bookCover");
+const coverPreview = document.querySelector("#coverPreview");
+
+
+coverInput.addEventListener("change", () => {
+    const file = coverInput.files[0];
+    coverPreview.style.backgroundImage = file
+        ? `url("${URL.createObjectURL(file)}")`
+        : "";
+    coverPreview.addClass("card-cover");
+});
+
+addBookForm.addEventListener("reset", () => {
+    coverPreview.style.backgroundImage = "";
+});
