@@ -14,17 +14,20 @@ Book.prototype.info = function() {
     return this.title + " by " + this.author + " was written in " + this.yearWritten + " . BTW i have read it:" + this.read;
 }
 
+Book.prototype.toggleRead = function () {
+    this.read = !this.read;
+};
+
 function addBookToLibrary(title, author, pages, read, yearWritten) {
     library.push(new Book(title, author, pages, read, yearWritten));
 }
-
-/* 
+ 
+// Data seeder
 addBookToLibrary("aBook", "author", 393, true, 1290);
 addBookToLibrary("hello", "author", 39, true, 1290);
 addBookToLibrary("breakdance classics", "mozart", 38, true, 1469);
 addBookToLibrary("aBook", "author", 234, true, 1290);
 addBookToLibrary("aBook", "author", 300, true, 1290);
- */
 
 const libDiv = document.querySelector("#library");
 
@@ -45,8 +48,14 @@ function renderBooksInLibrary() {
         bookInfo.classList.add("card-book-info");
         bookTitle.classList.add("card-title");
         bookAuthor.classList.add("card-author");
-        bookRead.classList.add("card-read-btn");
-        bookRead.textContent = "?";
+
+        if (book.read) {
+            bookRead.textContent = "\u2713";
+            bookRead.classList.add("card-have-read-btn", "card-read-btn");
+        } else {
+            bookRead.textContent = "?";
+            bookRead.classList.add("card-have-not-read-btn",  "card-read-btn");
+        }
 
         const cover = document.createElement("img");
         cover.classList.add("card-cover");
@@ -112,13 +121,6 @@ addNewBookBtn.addEventListener( "click", (e) => {
         data.bookYearWritten
     );
 
-    console.log(
-        data.bookTitle,
-        data.bookAuthor,
-        data.bookPages,
-        data.bookHaveRead === "on",
-        data.bookYearWritten)
-
     addBookForm.reset();
     addBookDialog.close();
     libDiv.replaceChildren();
@@ -158,4 +160,16 @@ libDiv.addEventListener( "click", (e) => {
 
 
 
+libDiv.addEventListener( "click", (e) => {
+    const bookReadButton = e.target.closest(".card-read-btn");
+    if (!bookReadButton) return;
 
+    const card = bookReadButton.closest(".card");
+    const book = library.find(book => book.id === card.dataset.id);
+    if (!book) return;
+
+    book.toggleRead();
+
+    libDiv.replaceChildren();
+    renderBooksInLibrary();
+})
