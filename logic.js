@@ -18,13 +18,13 @@ function addBookToLibrary(title, author, pages, read, yearWritten) {
     library.push(new Book(title, author, pages, read, yearWritten));
 }
 
-
+/* 
 addBookToLibrary("aBook", "author", 393, true, 1290);
 addBookToLibrary("hello", "author", 39, true, 1290);
 addBookToLibrary("breakdance classics", "mozart", 38, true, 1469);
 addBookToLibrary("aBook", "author", 234, true, 1290);
 addBookToLibrary("aBook", "author", 300, true, 1290);
-
+ */
 
 const libDiv = document.querySelector("#library");
 
@@ -34,6 +34,7 @@ function renderBooksInLibrary() {
     for(const book of library) {
         const card = document.createElement("div");
         card.classList.add("card");
+        card.dataset.id = book.id;
 
         const bookInfoContainer = document.createElement("div");
         const bookInfo = document.createElement("div");
@@ -111,7 +112,8 @@ addNewBookBtn.addEventListener( "click", (e) => {
         data.bookYearWritten
     );
 
-    console.log(data.bookTitle,
+    console.log(
+        data.bookTitle,
         data.bookAuthor,
         data.bookPages,
         data.bookHaveRead === "on",
@@ -139,29 +141,21 @@ document.addEventListener('keyup', (e) => {
 
 
 
+// Delete a book from the library
+
+libDiv.addEventListener( "click", (e) => {
+    const deleteButton = e.target.closest(".card-delete");
+    if (!deleteButton) return;
+
+    const card = e.target.closest(".card");
+    const id = card.dataset.id;
+    const index = library.findIndex(book => book.id === id);
+    if (index !== -1 ) library.splice(index, 1);
+
+    libDiv.replaceChildren();
+    renderBooksInLibrary();
+})
 
 
 
 
-
-
-
-/*
-function renderBooksInLibrary() {
-    const table = document.createElement('table');
-
-    for(const book of library) {
-        const tRow = document.createElement('tr');
-        const tData = document.createElement('td');
-
-        tData.textContent = book.info();
-
-        tRow.appendChild(tData);
-        table.appendChild(tRow);
-    }
-
-    libDiv.appendChild(table);
-}
-
-renderBooksInLibrary();
-*/
