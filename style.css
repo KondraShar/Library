@@ -23,6 +23,86 @@ body {
     gap: 1rem;
 }
 
+#addBook {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+
+    height: 2.5rem;
+    width: 6.5rem;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 4px 6px 12px 0 rgba(0, 0, 0, 0.931);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+}
+
+
+#addBookDialog[open] {
+    display: grid;
+    place-items: center;
+}
+
+#addBookDialog {
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+    padding: clamp(1rem, 5vw, 2.42rem);
+    width: minmax(80vw, 28rem);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+#addBookDialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 4.2px;
+}
+
+#addBookDialog p {
+    padding-bottom: 1.4rem;
+    font-size: 1.342rem;
+}
+
+#input-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 8px;
+}
+
+.bookHaveRead {
+    flex-direction: row;
+    justify-content: left;
+    gap: 12px;
+}
+
+.modal-btn {
+    display: flex;
+    flex-direction: row;
+    
+    gap: 10px;
+    padding-top: 1.42rem;
+    margin: 8px;
+}
+
+.modal-btn button {
+    width:max-content;
+    padding: 4px;
+
+}
+
 .card {
     width: 14rem;
     background-color: white;

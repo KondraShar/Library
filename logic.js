@@ -14,39 +14,20 @@ Book.prototype.info = function() {
     return this.title + " by " + this.author + " was written in " + this.yearWritten + " . BTW i have read it:" + this.read;
 }
 
-function newBook(title, author, pages, read, yearWritten) {
+function addBookToLibrary(title, author, pages, read, yearWritten) {
     library.push(new Book(title, author, pages, read, yearWritten));
 }
 
 
-newBook("aBook", "author", 393, true, 1290);
-newBook("hello", "author", 39, true, 1290);
-newBook("breakdance classics", "mozart", 38, true, 1469);
-newBook("aBook", "author", 234, true, 1290);
-newBook("aBook", "author", 300, true, 1290);
+addBookToLibrary("aBook", "author", 393, true, 1290);
+addBookToLibrary("hello", "author", 39, true, 1290);
+addBookToLibrary("breakdance classics", "mozart", 38, true, 1469);
+addBookToLibrary("aBook", "author", 234, true, 1290);
+addBookToLibrary("aBook", "author", 300, true, 1290);
 
 
 const libDiv = document.querySelector("#library");
 
-/*
-function renderBooksInLibrary() {
-    const table = document.createElement('table');
-
-    for(const book of library) {
-        const tRow = document.createElement('tr');
-        const tData = document.createElement('td');
-
-        tData.textContent = book.info();
-
-        tRow.appendChild(tData);
-        table.appendChild(tRow);
-    }
-
-    libDiv.appendChild(table);
-}
-
-renderBooksInLibrary();
-*/
 
 function renderBooksInLibrary() {
 
@@ -103,3 +84,84 @@ function renderBooksInLibrary() {
 }
 
 renderBooksInLibrary();
+
+
+// Add a book to the library through modal
+
+const addBookDialog = document.querySelector("#addBookDialog");
+const addBookForm = document.querySelector("#addBookForm");
+const addNewBookBtn = document.querySelector("#confirmNewBookBtn");
+const addBookBtn = document.querySelector("#addBook");
+
+addBookBtn.addEventListener( "click", (e) => {
+    addBookForm.reset();
+})
+
+
+addNewBookBtn.addEventListener( "click", (e) => {
+    e.preventDefault();
+    const formData = new FormData(addBookForm);
+    const data = Object.fromEntries(formData);
+
+    addBookToLibrary(
+        data.bookTitle,
+        data.bookAuthor,
+        data.bookPages,
+        data.bookHaveRead === "on",
+        data.bookYearWritten
+    );
+
+    console.log(data.bookTitle,
+        data.bookAuthor,
+        data.bookPages,
+        data.bookHaveRead === "on",
+        data.bookYearWritten)
+
+    addBookForm.reset();
+    addBookDialog.close();
+    libDiv.replaceChildren();
+    renderBooksInLibrary();
+
+})
+
+document.addEventListener('keyup', (e) => {
+  if (e.key === 'Escape') {
+    addBookForm.reset();
+    addBookDialog.close();
+  }
+});
+
+document.addEventListener('keyup', (e) => {
+  if (e.key === 'a') {
+    addBookDialog.showModal();
+  }
+});
+
+
+
+
+
+
+
+
+
+
+/*
+function renderBooksInLibrary() {
+    const table = document.createElement('table');
+
+    for(const book of library) {
+        const tRow = document.createElement('tr');
+        const tData = document.createElement('td');
+
+        tData.textContent = book.info();
+
+        tRow.appendChild(tData);
+        table.appendChild(tRow);
+    }
+
+    libDiv.appendChild(table);
+}
+
+renderBooksInLibrary();
+*/

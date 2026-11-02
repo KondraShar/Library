@@ -10,5 +10,54 @@
 <body>
     <div id="page-name">Library</div>
     <div id="library"></div>
+    <button id="addBook" command="show-modal" commandfor="addBookDialog">add book</button>
+
+    <dialog id="addBookDialog" closedby="any">
+        <form id="addBookForm" method="dialog">
+            <p>Enter the details of your book</p>
+
+            <div id="input-fields">
+
+                <div class="basic-input">
+                    <div class="input-field bookTitle">
+                        <label for="bookTitle">Book title:</label>
+                        <input name="bookTitle" id="bookTitle" type="text">
+                    </div>
+                    <div class="input-field bookAuthor">
+                        <label for="bookAuthor">Author:</label>
+                        <input name="bookAuthor" id="bookAuthor" type="text">
+                    </div>
+                    <div class="input-field bookPages">
+                        <label for="bookPages">Pages:</label>
+                        <input name="bookPages" id="bookPages" type="number" min="1" max="3000">
+                    </div>
+                </div>
+
+                <div class="input-field bookHaveRead">
+                    <input name="bookHaveRead" id="bookHaveRead" type="radio">
+                    <label for="bookHaveRead">read the book </label>
+                </div>
+
+                <div class="input-field bookYearWritten">
+                    <label for="bookYearWritten">Year written: </label>
+                    <input
+                        type="number"
+                        name="bookYearWritten"
+                        id="bookYearWritten"
+                        min="-3000"
+                        max="2027"
+                        step="1"
+                        placeholder="e.g. 1869 or -800"
+                        />
+
+                </div>
+            </div>
+
+            <div class="modal-btn">
+                <button type="submit" id="confirmNewBookBtn">Add to library</button>
+                <button type="submit" value="cancel" formmethod="dialog" formnovalidate>Cancel</button>
+            </div>
+        </form>
+    </dialog>
 </body>
 </html>
